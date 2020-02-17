@@ -1,0 +1,272 @@
+{% extends 'finchart/base.html' %}
+{% load humanize %}
+
+{% block content %}
+<h1>{{ company_name }}の決算データ</h1>
+
+<section class="tables">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header d-flex">
+                        <h3 class="h4">決算推移</h3>
+                    </div><!--card header-->
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table width="100%" class="table table-bordered display nowrap">
+                                <tr>
+                                    <th rowspan="2" width="120px"></th>
+                                    {% for item in fstatement_list reversed %}
+                                        <th colspan="2" width="120px" class="center"><a href="">{{ item.fiscal_year }}</a></th>
+                                    {% endfor %}
+                                </tr>
+                                <tr style="text-align: center;">
+                                    <td width="120px">金額</td>
+                                    <td width="100px">比率</td>
+                                    <td width="120px">金額</td>
+                                    <td width="100px">比率</td>
+                                    <td width="120px">金額</td>
+                                    <td width="100px">比率</td>                                            
+                                    <td width="120px">金額</td>
+                                    <td width="100px">比率</td>                                            
+                                </tr>
+                                <tr>
+                                    <td colspan="9" class="bg-title" style="text-align: left;">貸借対照表</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="9" class="title" style="text-align: left;">資産の部</td>
+                                </tr>
+                                <tr>
+                                    <th class="lv1-bottom">流動資産</th>
+                                    {% for item in fstatement_list reversed %}
+                                        <td class="amount lv1-bottom">{{ item.bs_current_assets|intcomma }}</td>
+                                        <td class="rate lv1-bottom">{{ item.current_assets_rate|floatformat:1 }}％</td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <th class="lv1-bottom">固定資産</th>
+                                    {% for item in fstatement_list reversed %}
+                                        <td class="amount lv1-bottom">{{ item.bs_fixed_assets|intcomma }}</td>
+                                        <td class="rate lv1-bottom">{{ item.fixed_assets_rate|floatformat:1 }}％</td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <th class="lv1-bottom">繰延資産</th>
+                                    {% for item in fstatement_list reversed %}
+                                        <td class="amount lv1-bottom">{{ item.bs_deferred_assets|intcomma }}</td>
+                                        <td class="rate lv1-bottom">{{ item.deferred_assets_rate|floatformat:1 }}％</td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <th class="lv1-bottom">総資産</th>
+                                    {% for item in fstatement_list reversed %}
+                                        <td class="amount lv1-bottom">{{ item.bs_total_assets|intcomma }}</td>
+                                        <td class="rate lv1-bottom">100％</td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td colspan="9" class="title" style="text-align: left;">負債の部</td>
+                                </tr>
+                                <tr>
+                                    <th>流動負債</th>
+                                    {% for item in fstatement_list reversed %}
+                                        <td class="amount">{{ item.bs_current_liabilities|intcomma }}</td>
+                                        <td class="rate">{{ item.current_liabilities_rate|floatformat:1 }}％</td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <th>固定負債</th>
+                                    {% for item in fstatement_list reversed %}
+                                        <td class="amount">{{ item.bs_fixed_liabilities|intcomma }}</td>
+                                        <td class="rate">{{ item.fixed_liabilities_rate|floatformat:1 }}％</td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td colspan="9" class="title">純資産の部</td>
+                                </tr>
+                                <tr>
+                                    <th class="lv1-bottom">株主資本</th>
+                                    {% for item in fstatement_list reversed %}
+                                        <td class="amount lv1-bottom">{{ item.bs_net_assets|intcomma }}</td>
+                                        <td class="rate lv1-bottom">{{ item.net_assets_rate|floatformat:1 }}％</td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    {% for item in fstatement_list reversed %}
+                                        <th colspan="2" width="120px" class="center"><a href="">{{ item.fiscal_year }}</a></th>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td colspan="9" class="bg-title" style="text-align: left;">損益計算書</td>
+                                </tr>
+                                <tr>
+                                    <td>総売上高</td>
+                                    {% for item in fstatement_list reversed %}
+                                        <td class="amount">{{ item.pl_gross_sales|intcomma }}</td>
+                                        <td class="rate">-</td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>売上高総利益</td>
+                                    {% for item in fstatement_list reversed %}
+                                        <td class="amount">{{ item.pl_gross_profit|intcomma }}</td>
+                                        <td class="rate">{{ item.gross_profit_rate|floatformat:1 }}％</td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>営業利益</td>
+                                    {% for item in fstatement_list reversed %}
+                                        <td class="amount">{{ item.pl_operating_profit|intcomma }}</td>
+                                        <td class="rate">{{ item.operating_profit_rate|floatformat:1 }}％</td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>経常利益</td>
+                                    {% for item in fstatement_list reversed %}
+                                        <td class="amount">{{ item.pl_ordinary_income|intcomma }}</td>
+                                        <td class="rate">{{ item.ordinary_income_rate|floatformat:1 }}％</td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>税引き前利益</td>
+                                    {% for item in fstatement_list reversed %}
+                                        <td class="amount">{{ item.pl_income_before_tax|intcomma }}</td>
+                                        <td class="rate">{{ item.income_before_tax_rate|floatformat:1 }}％</td>
+                                    {% endfor %}
+                                </tr>
+                                <tr class="bottom">
+                                    <td>当期純利益</td>
+                                    {% for item in fstatement_list reversed %}
+                                        <td class="amount">{{ item.pl_net_income|intcomma }}</td>
+                                        <td class="rate">{{ item.net_income_rate|floatformat:1 }}％</td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    {% for item in fstatement_list reversed %}
+                                        <th colspan="2" width="120px" class="center"><a href="">{{ item.fiscal_year }}</a></th>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td colspan="9" class="bg-title" style="text-align: left;">キャッシュフロー</td>
+                                </tr>
+                                    <td>営業ＣＦ</td>
+                                    {% for item in fstatement_list reversed %}
+                                        <td colspan="2" class="amount">{{ item.cf_operating|intcomma }}</td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>投資ＣＦ</td>
+                                    {% for item in fstatement_list reversed %}
+                                        <td colspan="2" class="amount">{{ item.cf_investment|intcomma }}</td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>財務ＣＦ</td>
+                                    {% for item in fstatement_list reversed %}
+                                        <td colspan="2" class="amount">{{ item.cf_finance|intcomma }}</td>
+                                    {% endfor %}
+                                </tr>
+                                <tr class="bottom">
+                                    <th>合計ＣＦ</th>
+                                    {% for item in fstatement_list reversed %}
+                                        <td colspan="2" class="amount">{{ item.cf_total_amount|intcomma }}</td>
+                                    {% endfor %}
+                                </tr>
+                            </table>
+                            <br>
+                        </div><!--table responsive-->    
+                    </div><!-- card body -->
+                </div><!--card-->
+            </div><!--col-->
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header d-flex align-items-center">
+                        <h3 class="h4">推移グラフ</h3>
+                    </div><!--card header-->
+                    <div class="card-body">
+                        <canvas id="myChart" width="400" height="200"></canvas>
+                        <script>
+                            var ctx = document.getElementById('myChart').getContext('2d');
+                            var label_fyear = [ {% for item in fstatement_list reversed %} "{{ item.fiscal_year }}", {% endfor %}];
+                            var data_sales = [ {% for item in fstatement_list reversed %} {{item.pl_gross_sales}}, {% endfor %} ];
+                            var data_gross_profit = [ {% for item in fstatement_list reversed %} {{item.pl_gross_profit}}, {% endfor %} ];
+                            var data_operating_profit = [ {% for item in fstatement_list reversed %} {{item.pl_operating_profit}}, {% endfor %} ];
+                            
+                            //========ここから3行追加========
+                            var data_total_assets = [ {% for item in fstatement_list reversed %} {{item.bs_total_assets }}, {% endfor %} ];
+                            var data_fixed_liabilities = [ {% for item in fstatement_list reversed %} {{item.bs_fixed_liabilities }}, {% endfor %} ];
+                            var data_net_assets = [ {% for item in fstatement_list reversed %} {{item.bs_net_assets }}, {% endfor %} ];
+                            //========ここまで追加========
+                
+                            var myChart = new Chart(ctx, {
+                                type: 'bar',//line から bar に変更
+                                data: {
+                                    labels: label_fyear,
+                                    datasets: [{
+                                        label: '売上高',
+                                        data: data_sales,
+                                        type: 'line',//この行（type）を追加
+                                        fill: false,
+                                        lineTension: 0,
+                                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                        borderColor: 'rgba(255, 99, 132, 1)',
+                                        borderWidth: 2,
+                                    },{
+                                        label: '売上総利益',
+                                        data: data_gross_profit,
+                                        type: 'line',//この行（type）を追加
+                                        fill: false,
+                                        lineTension: 0,
+                                        backgroundColor:'rgba(54, 162, 235, 0.2)',
+                                        borderColor: 'rgba(54, 162, 235, 1)',
+                                        borderWidth: 2,
+                                    },{
+                                        label: '営業利益',
+                                        data: data_operating_profit,
+                                        type: 'line',///この行（type）を追加
+                                        fill: false,
+                                        lineTension: 0,
+                                        backgroundColor:'rgba(255, 206, 86, 0.2)',
+                                        borderColor: 'rgba(255, 206, 86, 1)',
+                                        borderWidth: 2,
+                                    },
+
+                                    //========ここから追加（総資産、固定負債、純資産）========
+                                    {
+                                        label: '総資産',
+                                        data: data_total_assets,
+                                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                        borderColor: 'rgba(75, 192, 192, 1)',
+                                        borderWidth: 1,
+                                    },{
+                                        label: '固定負債',
+                                        data: data_fixed_liabilities,
+                                        backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                                        borderColor: 'rgba(255, 159, 64, 1)',
+                                        borderWidth: 1,
+                                    },{
+                                        label: '純資産',
+                                        data: data_net_assets,
+                                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                                        borderColor: 'rgba(153, 102, 255, 1)',
+                                        borderWidth: 1,
+                                    }
+                                    //========ここまで追加（総資産、固定負債、純資産）========
+
+                                    ]
+                                },
+                            });
+                        </script>
+                    </div><!-- class card body -->
+                </div><!-- class card -->
+            </div><!-- col -->
+        </div><!-- row -->
+    </div><!-- container-fluid -->
+</section>
+<br><br>
+{% endblock %}

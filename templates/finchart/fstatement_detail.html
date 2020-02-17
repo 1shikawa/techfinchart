@@ -1,0 +1,250 @@
+{% extends 'finchart/base.html' %}
+{% load humanize %}
+
+{% block content %}
+<section class="table">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header d-flex align-items-center">
+                        <h3 class="h4">【 {{ object.fiscal_year }} 】決算詳細</h3>
+                    </div><!--card header-->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>貸借対照表</h4>
+                                <table class="table table-bordered" width="100%">
+                                    <tr>
+                                        <th colspan="3" width="50%" class="title">資産の部</th>
+                                        <th colspan="3" width="50%" class="title">負債の部</th>
+                                    </tr>
+                                    <tr>
+                                        <td class="lv1-bottom">流動資産</td>
+                                        <td class="amount lv1-bottom">{{ object.bs_current_assets|intcomma }}</td>
+                                        <td class="rate lv1-bottom">{{ object.current_assets_rate|floatformat:1 }}％</td>
+                                        <td>流動負債</td>
+                                        <td class="amount">{{ object.bs_current_liabilities|intcomma }}</td>
+                                        <td class="rate">{{ object.current_liabilities_rate|floatformat:1 }}％</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="lv2-last">固定資産</td>
+                                        <td class="amount lv2-last">{{ object.bs_fixed_assets|intcomma }}</td>
+                                        <td class="rate lv2-last">{{ object.fixed_assets_rate|floatformat:1 }}％</td>
+                                        <td>固定負債</td>
+                                        <td class="amount">{{ object.bs_fixed_liabilities|intcomma }}</td>
+                                        <td class="rate">{{ object.fixed_liabilities_rate|floatformat:1 }}％</td>                            
+                                    </tr>
+                                    <tr>
+                                        <td class="lv2-top">繰延資産</td>
+                                        <td class="lv2-top amount">{{ object.bs_deferred_assets|intcomma }}</td>
+                                        <td class="lv2-top rate">{{ object.deferred_assets_rate|floatformat:1 }}％</td>
+                                        <th class="title" colspan="3">純資産の部</th>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3"></td>
+                                        <td class="lv1-bottom">純資産</td>
+                                        <td class="amount lv1-bottom">{{ object.bs_net_assets|intcomma }}</td>
+                                        <td class="rate lv1-bottom">{{ object.net_assets_rate|floatformat:1 }}％</td>
+                                    </tr>
+                                    <tr class="bottom">
+                                        <td>総資産</td>
+                                        <td class="amount bs_total_assets">{{ object.bs_total_assets|intcomma }}</td>
+                                        <td class="rate">100%</td>
+                                        <td>負債・純資産合計</td>
+                                        <td class="amount">{{ object.bs_total_assets|intcomma }}</td>
+                                        <td class="rate">100%</td>
+                                    </tr>
+                                </table>
+                            </div>                            
+                        </div> <!-- row -->
+                        <br>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4>損益計算書</h4>
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th colspan="3" class="title td-top">損益計算書</th>
+                                    </tr>
+                                    <tr>
+                                        <td>売上高</td>
+                                        <td class="amount">{{ object.pl_gross_sales|intcomma }}</td>
+                                        <td class="rate">-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>売上総利益</td>
+                                        <td class="amount">{{ object.pl_gross_profit|intcomma }}</td>
+                                        <td class="rate">{{ object.gross_profit_rate|floatformat:1 }}％</td>
+                                    </tr>
+                                    <tr>
+                                        <td>営業利益</td>
+                                        <td class="amount">{{ object.pl_operating_profit|intcomma }}</td>
+                                        <td class="rate">{{ object.operating_profit_rate|floatformat:1 }}％</td>
+                                    </tr>
+                                    <tr>
+                                        <td>経常利益</td>
+                                        <td class="amount">{{ object.pl_ordinary_income|intcomma }}</td>
+                                        <td class="rate">{{ object.ordinary_income_rate|floatformat:1 }}％</td>
+                                    </tr>
+                                    <tr>
+                                        <td>税引き前当期純利益</td>
+                                        <td class="amount">{{ object.pl_income_before_tax|intcomma }}</td>
+                                        <td class="rate">{{ object.income_before_tax_rate|floatformat:1 }}％</td>
+                                    </tr>
+                                    <tr>
+                                        <td>当期純利益</td>
+                                        <td class="amount">{{ object.pl_net_income|intcomma }}</td>
+                                        <td class="rate">{{ object.net_income_rate|floatformat:1 }}％</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <h4>キャッシュフロー</h4>
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th class="title" colspan="2">キャッシュフロー計算書</th>
+                                    </tr>
+                                    <tr>
+                                        <td>営業CF</td>
+                                        <td class="amount">{{ object.cf_operating|intcomma }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>投資CF</td>
+                                        <td class="amount">{{ object.cf_investment|intcomma }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>財務CF</td>
+                                        <td class="amount">{{ object.cf_finance|intcomma }}</td>
+                                    </tr>
+                                    <tr class="bottom">
+                                        <th>キャッシュフロー増減</th>
+                                        <td class="amount">{{ object.cf_total_amount|intcomma }}</td>
+                                    </tr>   
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- ========ここから追加======== -->
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>指標</h4>
+                            </div>
+                            <div class="col-md-12">
+                                <table class="table table-bordered">
+                                    <tr style="text-align: center;">
+                                        <td>指標名</td>
+                                        <td>意味</td>
+                                        <td width="150px">数値</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" class="title">安全性の指標</td>
+                                    </tr>
+                                    <tr>
+                                        <td>流動比率</td>
+                                        <td>「流動資産／流動負債」。企業の短期的な支払能力を簡易的に判断。200%以上だと優良。</td>
+                                        <td class="rate">{{ object.current_rate|floatformat:1 }}％</td>
+                                    </tr>
+                                    <tr>
+                                        <td>自己資本比率</td>
+                                        <td>「純資産／総資産」。会社の持つ資産がどの程度自己資本でまかなわれているか。</td>
+                                        <td class="rate">{{ object.net_assets_rate|floatformat:1 }}％</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" class="title">収益性の指標</td>
+                                    </tr>
+                                    <tr>
+                                        <td>粗利益率</td>
+                                        <td>売上に対して原価だけを引いた利益がどの程度残るか。</td>
+                                        <td class="rate">{{ object.gross_profit_rate|floatformat:1 }}％</td>
+                                    </tr>
+                                    <tr>
+                                        <td>営業利益率</td>
+                                        <td>本業としての利益率。</td>
+                                        <td class="rate">{{ object.operating_profit_rate|floatformat:1 }}％</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" class="title">効率性の指標</td>
+                                    </tr>
+                                    <tr>
+                                        <td>ＲＯＥ</td>
+                                        <td>自己資本に対して利益がどの程度あるか。（ここでは営業利益を用いる）</td>
+                                        <td class="rate">{{ object.roe|floatformat:1 }}％</td>
+                                    </tr>
+                                    <tr>
+                                        <td>ＲＯＡ</td>
+                                        <td>総資産に対して利益がどの程度あるか。（ここでは営業利益を用いる）</td>
+                                        <td class="rate">{{ object.roa|floatformat:1 }}％</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <br>
+                        <!-- ========ここまで追加======== -->
+
+                    </div>
+                </div>
+            <div><!-- col -->
+        </div><!-- row -->
+        <br><br>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header d-flex align-items-center">
+                        <h3 class="h4">資産の内訳</h3>
+                    </div><!--card header-->
+                    <div class="card-body">
+                        <canvas id="pie_assets" width="400" height="400"></canvas>
+                        <script>
+                            var ctx = document.getElementById('pie_assets');
+                            var data_current_assets = '{{object.bs_current_assets}}';
+                            var data_fixed_assets = '{{object.bs_fixed_assets}}';
+                            var data_deferred_assets = '{{object.bs_deferred_assets}}';
+                            var pie_assets = new Chart(ctx, {
+                                type: 'pie',
+                                data: {
+                                    labels: ['流動資産','固定資産','繰延資産'],
+                                    datasets: [{
+                                        backgroundColor: ['rgba(255, 99, 132, 0.8)','rgba(54, 162, 235, 0.8)','rgba(255, 206, 86, 0.8)'],
+                                        data: [data_current_assets, data_fixed_assets,data_deferred_assets]
+                                    }]
+                                },
+                            });
+                        </script>
+                    </div><!-- class card body -->
+                </div><!-- class card -->
+            </div><!-- col -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header d-flex align-items-center">
+                        <h3 class="h4">負債・純資産の内訳</h3>
+                    </div><!--card header-->
+                    <div class="card-body">
+                        <canvas id="pie_liabilities" width="400" height="400"></canvas>
+                        <script>
+                            var ctx = document.getElementById('pie_liabilities');
+                            var data_current_liabilities = '{{object.bs_current_liabilities}}';
+                            var data_fixed_liabilities = '{{object.bs_fixed_liabilities}}';
+                            var data_net_assets = '{{object.bs_net_assets}}';
+                            var pie_liabilities = new Chart(ctx, {
+                                type: 'pie',
+                                data: {
+                                    labels: ['流動負債','固定負債','純資産'],
+                                    datasets: [{
+                                        backgroundColor: ['rgba(255, 99, 132, 0.8)','rgba(54, 162, 235, 0.8)','rgba(153, 102, 255, 0.8)'],
+                                        data: [data_current_liabilities, data_fixed_liabilities,data_net_assets]
+                                    }]
+                                },
+                            });
+                        </script>
+                    </div><!-- class card body -->
+                </div><!-- class card -->
+            </div>
+        </div><!-- row -->
+        <br><br>
+    </div><!-- container -->
+</section>
+{% endblock %}

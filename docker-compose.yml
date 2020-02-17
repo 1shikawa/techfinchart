@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+  web:
+    container_name: django-techfinchart
+    build: .
+    command: bash -c "python manage.py runserver 0.0.0.0:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=techfinchart.local_settings
+    volumes:
+      - .:/code
+    tty: true
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+
+  db:
+    container_name: techfinchart-db
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: finchart
+      MYSQL_PASSWORD: finchart
+      TZ: "Asia/Tokyo"
+    tty: true
+    volumes:
+      - db_volume:/var/lib/mysql
+      - ./mysql/sql:/docker-entrypoint-initdb.d
+
+volumes:
+  db_volume:
+    driver: local
+  static:

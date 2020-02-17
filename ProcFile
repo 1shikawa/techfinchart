@@ -1,0 +1,1 @@
+web: gunicorn techfinchart.wsgi --log-file -
